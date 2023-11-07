@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+import { useParams, useNavigate, HashRouter } from "react-router-dom";
 import axios from "axios";
 import Header from "../Components/Header/Header";
 import "./MoviesDetail.css";
@@ -18,18 +18,6 @@ export default function MoviesDetail() {
   const [cinemas, setCinemas] = useState([]);
   const [cities, setCities] = useState([]);
   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //     fetchMovieById(id)
-  //       .then((movie) => {
-  //         setMovie(movie);
-  //         console.log("Movie details:", movie);
-  //         // Handle movie details here
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-  //   }, [id]);
 
   useEffect(() => {
     fetchMovieById(id)
@@ -59,22 +47,6 @@ export default function MoviesDetail() {
   const modalRef = useRef();
 
   const [showModal, setShowModal] = useState(false);
-
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:8000/api/cinemas/all")
-  //       .then((response) => {
-  //         setCinemas(response.data);
-  //         const uniqueCities = [
-  //           ...new Set(response.data.map((cinema) => cinema.city)),
-  //         ];
-  //         setCities(uniqueCities);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching cinemas:", error);
-  //       });
-  //   });
-
   useEffect(() => {
     const bsModal = modalRef.current;
     let modal = Modal.getInstance(bsModal);
@@ -217,7 +189,11 @@ export default function MoviesDetail() {
       </div>
 
       {selectedCinemas.length > 0 ? (
-        <Days selectedCinemas={selectedCinemas} id={id}></Days>
+        <Days
+          selectedCinemas={selectedCinemas}
+          id={id}
+          filmName={movie.Title}
+        />
       ) : (
         ""
       )}

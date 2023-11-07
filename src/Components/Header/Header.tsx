@@ -8,25 +8,27 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/cinemaximum-main.png";
 import { UserContext } from "../../Contexts/UserContext";
 
-const Header = (props) => {
-  const userMail = localStorage.getItem("User");
-  const { user } = props;
-  console.log(user);
+const Header = () => {
+  const userMail = localStorage.getItem("user");
+  const user = userMail ? JSON.parse(userMail) : null;
   const navigate = useNavigate();
 
   const HandleLogin = (e) => {
     navigate(`/${e}`);
   };
+
   const [search, setSearch] = useState(false);
+
   const HandleSearch = () => {
     setSearch(!search);
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container">
           <a className="navbar-brand" href="" onClick={() => navigate("/")}>
-            <img src={logo} className="w-24 h-24" />
+            <img src={logo} className="w-24 h-24" alt="Cinemaximum Logo" />
           </a>
           <button
             className="navbar-toggler"
@@ -59,18 +61,6 @@ const Header = (props) => {
                   <a className="dropdown-item" href="#">
                     CGV MoviePass
                   </a>
-                  <a className="dropdown-item" href="#">
-                    CGV MoviePass
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    CGV MoviePass
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    CGV MoviePass
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    CGV MoviePass
-                  </a>
                 </li>
               </ul>
             </span>
@@ -100,7 +90,7 @@ const Header = (props) => {
                   icon={faMagnifyingGlass}
                   className="search-icon-1"
                 />
-                <input type="text" placeholder="Search.."></input>
+                <input type="text" placeholder="Search.." />
                 <FontAwesomeIcon
                   icon={faXmark}
                   onClick={HandleSearch}
@@ -110,10 +100,11 @@ const Header = (props) => {
             )}
           </div>
           <button type="button" className="btn cs-header-btn-1">
-            Üye Ol
+            {user ? "Profil" : "Üye Ol"}{" "}
+            {/* Show "Profil" if a user is logged in */}
           </button>
-          {userMail ? (
-            <div className="user">{userMail}</div>
+          {user ? ( // Check if the user is logged in
+            <div className="user">{user.name}</div>
           ) : (
             <button
               type="button"

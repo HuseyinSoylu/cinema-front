@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, HashRouter } from "react-router-dom";
 import "./Days.css";
 
-const Days = ({ selectedCinemas, id }) => {
+const Days = ({ selectedCinemas, id, filmName }) => {
   const navigate = useNavigate();
   const [key, setKey] = useState();
   const [days, setDays] = useState([]);
 
   const HandleDate = () => {
     const days = [
-      "Pazartesi",
-      "Salı",
-      "Çarşamba",
-      "Perşembe",
-      "Cuma",
-      "Cumartesi",
-      "Pazar",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
     ];
     const months = [
-      "Ocak",
-      "Şubat",
-      "Mart",
-      "Nisan",
-      "Mayıs",
-      "Haziran",
-      "Temmuz",
-      "Ağustos",
-      "Eylül",
-      "Ekim",
-      "Kasım",
-      "Aralık",
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
+
     const today = new Date();
     let currentDay = today.getDay();
     let currentDate = today.getDate();
@@ -40,6 +41,7 @@ const Days = ({ selectedCinemas, id }) => {
     if (currentDay === 0) {
       currentDay = 7;
     }
+
     let dayCount = daysInMonth(currentMonth + 1, 2022);
 
     function daysInMonth(month, year) {
@@ -78,11 +80,20 @@ const Days = ({ selectedCinemas, id }) => {
     setKey(days[0].day);
   }, []);
 
-  const HandleBuyTicket = (element, e) => {
-    navigate(
-      `/buyticket/${id}/${selectedCinemas[0].location}/${e.target.innerText}`,
-      { state: { date: element.date, month: element.month } }
-    );
+  // const HandleBuyTicket = (element, e) => {
+  //   navigate(`/buy/${id}/${selectedCinemas[0].id}/${e.target.innerText}`, {
+  //     state: { date: element.date, month: element.month },
+  //   });
+  // };
+
+  const HandleBuyTicket = (element, e, filmName) => {
+    const cinemaId = selectedCinemas[0].id;
+    const hour = e.target.innerText.replace(".", "").replace(":", "");
+
+    // Use HashRouter to create a hash URL
+    navigate(`/buy/${id}/${cinemaId}/${hour}`, {
+      state: { date: element.date, month: element.month },
+    });
   };
 
   return (

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useHistory
 import axios from "axios";
 import Header from "../Components/Header/Header";
 
-const Login = () => {
+const Registration = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
+  const [registrationSuccess, setRegistrationSuccess] = useState(false); // State to track registration success
 
   let navigate = useNavigate();
 
@@ -23,20 +25,14 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/login",
+        "http://localhost:8000/api/register",
         formData
       );
-
-      const { user, token } = response.data;
-      console.log("Login successful", user);
-
-      // Store user information in local storage
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
-      navigate("/"); // Redirect to the home page or any other page
+      console.log("Registration successful", response.data);
+      setRegistrationSuccess(true);
+      navigate("/login");
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Registration failed", error);
     }
   };
 
@@ -44,8 +40,26 @@ const Login = () => {
     <>
       <Header />
       <div className="container mt-5">
-        <h2>Login</h2>
+        <h2>Registration</h2>
+        {registrationSuccess && ( // Conditionally render a success message
+          <div className="alert alert-success" role="alert">
+            Registration successful! You can now log in.
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email
@@ -73,7 +87,7 @@ const Login = () => {
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            Login
+            Register
           </button>
         </form>
       </div>
@@ -81,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;
