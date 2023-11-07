@@ -1,16 +1,12 @@
-import { React, useEffect, useState } from "react";
+import React from "react";
 import "./BottomCarousel.css";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import axios from "axios";
-import { movies as dummyfilms } from "../../DummyFilms.js";
 import { useQuery } from "react-query";
 import { fetchMovies } from "../../utils/fetch.ts";
 
 const BottomCarousel = () => {
-  const [movies, setMovies] = useState([]);
-
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -30,18 +26,7 @@ const BottomCarousel = () => {
     },
   };
 
-  const {
-    data: moviesData,
-    isLoading,
-    isError,
-    error,
-  } = useQuery("movies", fetchMovies);
-
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      setMovies(moviesData);
-    }
-  }, [moviesData, isLoading, isError]);
+  const { data: movies, isLoading } = useQuery("movies", fetchMovies);
 
   const navigate = useNavigate();
 
@@ -62,7 +47,7 @@ const BottomCarousel = () => {
             Vizyonda
           </a>
         </li>
-        <li className="nav-item" role="presentation">
+        <li className="nav-item role-presentation">
           <a
             className="nav-link"
             id="pills-soon-tab"
@@ -86,37 +71,74 @@ const BottomCarousel = () => {
         >
           <div className="multiCarousel">
             <Carousel responsive={responsive} autoPlay={false}>
-              {movies.map((item, index) => (
-                <div
-                  className="card"
-                  key={index}
-                  onClick={() => navigate(`/movie/${item.imdbID}`)}
-                >
-                  <img
-                    className="img-fluid"
-                    src={item.Poster}
-                    alt="Card image cap"
-                  />
-                  <div className="card-body">
-                    <a href="#" className="btn btn-dark">
-                      Yorum Yap
-                    </a>
-                    <a href="#" className="btn btn-light">
-                      Bilet Al
-                    </a>
-                  </div>
-                </div>
-              ))}
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                movies
+                  .filter((item) => !item.ComingSoon)
+                  .map((item, index) => (
+                    <div
+                      className="card"
+                      key={index}
+                      onClick={() => navigate(`/movie/${item.id}`)}
+                    >
+                      <img
+                        className="img-fluid"
+                        src={item.Poster}
+                        alt="Card image cap"
+                      />
+                      <div className="card-body">
+                        <a href="#" className="btn btn-dark">
+                          Yorum Yap
+                        </a>
+                        <a href="#" className="btn btn-light">
+                          Bilet Al
+                        </a>
+                      </div>
+                    </div>
+                  ))
+              )}
             </Carousel>
           </div>
         </div>
+
         <div
           className="tab-pane fade"
           id="pills-soon"
           role="tabpanel"
           aria-labelledby="pills-soon-tab"
         >
-          ...
+          <div className="multiCarousel">
+            <Carousel responsive={responsive} autoPlay={false}>
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                movies
+                  .filter((item) => item.ComingSoon)
+                  .map((item, index) => (
+                    <div
+                      className="card"
+                      key={index}
+                      onClick={() => navigate(`/movie/${item.id}`)}
+                    >
+                      <img
+                        className="img-fluid"
+                        src={item.Poster}
+                        alt="Card image cap"
+                      />
+                      <div className="card-body">
+                        <a href="#" className="btn btn-dark">
+                          Yorum Yap
+                        </a>
+                        <a href="#" className="btn btn-light">
+                          Bilet Al
+                        </a>
+                      </div>
+                    </div>
+                  ))
+              )}
+            </Carousel>
+          </div>
         </div>
       </div>
     </div>

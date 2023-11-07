@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import UserProvider from "./Contexts/UserContext";
 import MoviesDetail from "./pages/MoviesDetail";
+
 function App() {
   return (
     <>

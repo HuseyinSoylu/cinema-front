@@ -9,31 +9,71 @@ import Days from "../Components/Tabs/Days";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { movies } from "../DummyFilms.js";
+import { useQuery, useMutation } from "react-query";
+import { fetchMovieById, fetchCinemas } from "../utils/fetch.js";
 
 export default function MoviesDetail() {
   const { id } = useParams();
+  const [movie, setMovie] = useState([]);
   const [cinemas, setCinemas] = useState([]);
   const [cities, setCities] = useState([]);
-  const [movie, setMovie] = useState(movies[0]);
   const navigate = useNavigate();
-  const modalRef = useRef();
 
-  const [showModal, setShowModal] = useState(false);
+  //   useEffect(() => {
+  //     fetchMovieById(id)
+  //       .then((movie) => {
+  //         setMovie(movie);
+  //         console.log("Movie details:", movie);
+  //         // Handle movie details here
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error:", error);
+  //       });
+  //   }, [id]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/cinemas/all")
+    fetchMovieById(id)
+      .then((movie) => {
+        setMovie(movie);
+        console.log("Movie details:", movie);
+        // Handle movie details here
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    // Call the fetchCinemas function to get cinemas data
+    fetchCinemas()
       .then((response) => {
-        setCinemas(response.data);
+        setCinemas(response);
         const uniqueCities = [
-          ...new Set(response.data.map((cinema) => cinema.city)),
+          ...new Set(response.map((cinema) => cinema.city)),
         ];
         setCities(uniqueCities);
       })
       .catch((error) => {
         console.error("Error fetching cinemas:", error);
       });
-  }, []);
+  }, [id]);
+
+  const modalRef = useRef();
+
+  const [showModal, setShowModal] = useState(false);
+
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:8000/api/cinemas/all")
+  //       .then((response) => {
+  //         setCinemas(response.data);
+  //         const uniqueCities = [
+  //           ...new Set(response.data.map((cinema) => cinema.city)),
+  //         ];
+  //         setCities(uniqueCities);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching cinemas:", error);
+  //       });
+  //   });
 
   useEffect(() => {
     const bsModal = modalRef.current;
@@ -53,22 +93,22 @@ export default function MoviesDetail() {
   const openModal = () => {
     setShowModal(true);
   };
+
   const HandleCity = (el) => {
     setSelectedCity(el);
   };
+
   const HandleCinemas = (el) => {
     Promise.resolve()
       .then(() => {
         selectedCinemas.push(el);
         setSelectedCinemas(selectedCinemas);
-        console.log(selectedCinemas);
       })
-      .then(() => setShowModal(false))
-      .then(() => {});
+      .then(() => setShowModal(false));
   };
 
   const customStyle = {
-    backgroundImage: `url(${movie.image})`,
+    // backgroundImage: `url(${movie.Images[0]})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -93,8 +133,8 @@ export default function MoviesDetail() {
             className="row justify-content-between text-start"
             style={{ width: "100%" }}
           >
-            <div className="col-3">
-              <img src={movie.Poster} />
+            <div className="col-3 max-w-24">
+              <img src={movie.Poster} className="img-sizes" />
             </div>
             <div className="col-9 d-flex justify-content-between flex-column">
               <h1 className="text-black">{movie.Title}</h1>
@@ -155,7 +195,7 @@ export default function MoviesDetail() {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body">
               {selectedCity
