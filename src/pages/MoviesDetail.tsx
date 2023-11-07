@@ -21,13 +21,11 @@ export default function MoviesDetail() {
       .then((movie) => {
         setMovie(movie);
         console.log("Movie details:", movie);
-        // Handle movie details here
       })
       .catch((error) => {
         console.error("Error:", error);
       });
 
-    // Call the fetchCinemas function to get cinemas data
     fetchCinemas()
       .then((response) => {
         setCinemas(response);
@@ -107,13 +105,13 @@ export default function MoviesDetail() {
             </div>
             <div className="col-9 d-flex justify-content-between flex-column">
               <h1 className="text-black">{movie.Title}</h1>
-              <h3 className="text-black">Yönetmen: {movie.Director}</h3>
+              <h3 className="text-black">Director: {movie.Director}</h3>
               <div className="d-flex justify-content-between">
                 <a className="cs-btn first-btn text-black" href="#buyTicket">
-                  Bilet Al
+                  Buy Ticket
                 </a>
-                <a className="cs-btn">Fragman</a>
-                <a className="cs-btn">Yorum Yap</a>
+                <a className="cs-btn">Trailer</a>
+                <a className="cs-btn">Comments</a>
               </div>
             </div>
           </div>
@@ -123,17 +121,17 @@ export default function MoviesDetail() {
         <div className="row text-start">
           <div className="col-3">
             <p>
-              <strong>Vizyon Tarihi:</strong> {movie.Released}
+              <strong>Release Date:</strong> {movie.Released}
             </p>
             <p>
-              <strong>Süre</strong>: {movie.Runtime}{" "}
+              <strong>Runtime</strong>: {movie.Runtime}{" "}
             </p>
             <p>
-              <strong>Tür:</strong> {movie.Genre}
+              <strong>Genres:</strong> {movie.Genre}
             </p>
           </div>
           <div className="col-9">
-            <strong>Özet :</strong> {movie.Plot}
+            <strong>Plot :</strong> {movie.Plot}
           </div>
         </div>
       </div>
@@ -143,11 +141,11 @@ export default function MoviesDetail() {
         className="d-flex container mt-5 mb-5 justify-content-evenly cs-style"
       >
         <div>
-          <h3>Bilet Al</h3>
-          <p>Sinema Seç</p>
+          <h3>Buy Ticket </h3>
+          <p>Select Cinemas</p>
         </div>
         <div className="input" onClick={openModal}>
-          Sinema Seç
+          Select Cinemas
           <FontAwesomeIcon icon={faSort} />
         </div>
       </div>
@@ -157,7 +155,7 @@ export default function MoviesDetail() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">
-                {selectedCity ? selectedCity : "Sinema Seçiniz"}
+                {selectedCity ? selectedCity : "Select Cinema"}
               </h5>
               <button
                 type="button"

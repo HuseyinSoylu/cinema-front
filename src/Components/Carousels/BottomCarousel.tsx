@@ -44,7 +44,7 @@ const BottomCarousel = () => {
             aria-controls="pills-visionsoon"
             aria-selected="true"
           >
-            Vizyonda
+            In Cinemas
           </a>
         </li>
         <li className="nav-item role-presentation">
@@ -58,7 +58,7 @@ const BottomCarousel = () => {
             aria-controls="pills-soon"
             aria-selected="false"
           >
-            Yakında
+            Upcoming
           </a>
         </li>
       </ul>
@@ -89,10 +89,10 @@ const BottomCarousel = () => {
                       />
                       <div className="card-body">
                         <a href="#" className="btn btn-dark">
-                          Yorum Yap
+                          Make Comment
                         </a>
                         <a href="#" className="btn btn-light">
-                          Bilet Al
+                          Buy Ticket
                         </a>
                       </div>
                     </div>
