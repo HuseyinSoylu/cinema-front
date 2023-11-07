@@ -80,17 +80,10 @@ const Days = ({ selectedCinemas, id, filmName }) => {
     setKey(days[0].day);
   }, []);
 
-  // const HandleBuyTicket = (element, e) => {
-  //   navigate(`/buy/${id}/${selectedCinemas[0].id}/${e.target.innerText}`, {
-  //     state: { date: element.date, month: element.month },
-  //   });
-  // };
-
-  const HandleBuyTicket = (element, e, filmName) => {
+  const HandleBuyTicket = (element, e) => {
     const cinemaId = selectedCinemas[0].id;
-    const hour = e.target.innerText.replace(".", "").replace(":", "");
+    const hour = e.target.innerText.replace(".", ":").replace(":", ":");
 
-    // Use HashRouter to create a hash URL
     navigate(`/buy/${id}/${cinemaId}/${hour}`, {
       state: { date: element.date, month: element.month },
     });

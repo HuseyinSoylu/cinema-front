@@ -1,15 +1,12 @@
 import { React, useState, useEffect, useRef } from "react";
 // import { useParams } from "react-router-dom";
-import { useParams, useNavigate, HashRouter } from "react-router-dom";
-import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../Components/Header/Header";
 import "./MoviesDetail.css";
 import { Modal } from "bootstrap";
 import Days from "../Components/Tabs/Days";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { movies } from "../DummyFilms.js";
-import { useQuery, useMutation } from "react-query";
 import { fetchMovieById, fetchCinemas } from "../utils/fetch.js";
 
 export default function MoviesDetail() {
