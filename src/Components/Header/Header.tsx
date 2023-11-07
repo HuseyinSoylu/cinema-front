@@ -69,12 +69,12 @@ const Header = () => {
                 <ul className="navbar-nav">
                   <li className="nav-item">
                     <a className="nav-link" href="#">
-                      Filmler
+                      Films
                     </a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="#">
-                      Sinemalar
+                      Cinemas
                     </a>
                   </li>
                 </ul>
@@ -100,10 +100,9 @@ const Header = () => {
             )}
           </div>
           <button type="button" className="btn cs-header-btn-1">
-            {user ? "Profil" : "Üye Ol"}{" "}
-            {/* Show "Profil" if a user is logged in */}
+            {user ? "Profile" : "Register"}{" "}
           </button>
-          {user ? ( // Check if the user is logged in
+          {user ? (
             <div className="user">{user.name}</div>
           ) : (
             <button
@@ -111,7 +110,7 @@ const Header = () => {
               className="btn cs-header-btn-2"
               onClick={() => HandleLogin("login")}
             >
-              Giriş
+              Login
             </button>
           )}
         </div>

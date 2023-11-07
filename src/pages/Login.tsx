@@ -30,11 +30,10 @@ const Login = () => {
       const { user, token } = response.data;
       console.log("Login successful", user);
 
-      // Store user information in local storage
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
 
-      navigate("/"); // Redirect to the home page or any other page
+      navigate("/");
     } catch (error) {
       console.error("Login failed", error);
     }

@@ -8,7 +8,7 @@ import Days from "../Components/Tabs/Days";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchMovieById, fetchCinemas } from "../utils/fetch.js";
-
+import Footer from "../Components/Footer/Footer.js";
 export default function MoviesDetail() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
@@ -182,7 +182,6 @@ export default function MoviesDetail() {
           </div>
         </div>
       </div>
-
       {selectedCinemas.length > 0 ? (
         <Days
           selectedCinemas={selectedCinemas}
@@ -192,6 +191,8 @@ export default function MoviesDetail() {
       ) : (
         ""
       )}
+      <br className="my-3" />
+      <Footer />
     </>
   );
 }

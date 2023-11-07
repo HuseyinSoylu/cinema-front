@@ -25,7 +25,7 @@ const Registration = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/register",
+        "http://localhost:8000/api/users",
         formData
       );
       console.log("Registration successful", response.data);
@@ -41,7 +41,7 @@ const Registration = () => {
       <Header />
       <div className="container mt-5">
         <h2>Registration</h2>
-        {registrationSuccess && ( // Conditionally render a success message
+        {registrationSuccess && (
           <div className="alert alert-success" role="alert">
             Registration successful! You can now log in.
           </div>
