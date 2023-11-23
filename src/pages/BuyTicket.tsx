@@ -261,7 +261,7 @@ export default function BuyTicket() {
                   userId={userId}
                   seat={getSeatDetails()} // Pass the seat details here
                   price={price}
-                  showtime={`2023-${selectedMonth}-0${state.date}T${time}:00Z`}
+                  showtime={`2023-${selectedMonth}-${state.date}T${time}:00Z`}
                   location={cinema.id}
                 />
               </div>

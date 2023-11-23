@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import "./Home.css";
 
 import MainCarousel from "../Components/Carousels/MainCarousel";
